@@ -1,2 +1,2 @@
 # KDA-problems
-this is my levelof undrstanding
+this is my level of undrstanding

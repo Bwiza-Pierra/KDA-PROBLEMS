@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Prompt → HTML Export</title>
+<style>
+body{font-family:system-ui,Segoe UI,Arial;padding:28px;background:#f3f6f9;color:#0b1220}
+.wrap{max-width:900px;margin:0 auto}
+h1{margin:0 0 8px;font-size:22px}
+textarea{width:100%;min-height:180px;padding:10px;border-radius:8px;border:1px solid #d6dbe1}
+.controls{display:flex;gap:8px;margin-top:10px}
+button{padding:8px 12px;border-radius:8px;border:0;background:#0ea5a4;color:white;cursor:pointer}
+.preview{margin-top:18px;padding:12px;border-radius:8px;background:white;border:1px solid #e6e9ef}
+pre{white-space:pre-wrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Prompt → HTML Export</h1>
+<p>Type a short prompt below and click <strong>Generate</strong> to produce a simple HTML page you can download.</p>
+
+
+<label for="prompt">Prompt</label>
+<textarea id="prompt">A warm welcome message about kindness, include one short Bible verse reference and a 2-line prayer.</textarea>
+
+
+<div class="controls">
+<button id="generate">Generate HTML</button>
+<button id="download">Download .html</button>
+</div>
+
+
+<div class="preview" id="preview">No generated HTML yet.</div>
+<pre id="source"></pre>
+</div>
+
+
+<script>
+const promptEl = document.getElementById('prompt');
+const preview = document.getElementById('preview');
+const source = document.getElementById('source');
+const generate = document.getElementById('generate');
+const download = document.getElementById('download');
+
+
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+
+function buildHTML(prompt){
+const title = (prompt.split('\n')[0]||'Prompt Page').slice(0,60);
+const body = escapeHtml(prompt).replace(/\n/g,'<br>');
+return `<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>${title}</title>\n<style>body{font-family:Arial,Helvetica,sans-serif;padding:28px;line-height:1.6;color:#111;background:#fff} h1{font-size:24px}</style>\n</head>\n<body>\n<h1>${title}</h1>\n<p>${body}</p>\n</body>\n</html>`;
+}
+
+
+generate.addEventListener('click', ()=>{
+const html = buildHTML(promptEl.value.trim());
+preview.innerHTML = 'Preview (opens in new window): <a href="#" id="open">Open</a>';
+document.getElementById('open').addEventListener('click', (e)=>{ e.preventDefault(); const w = window.open(); w.document.write(html); w.document.close(); });
+source.textContent = html;
+});
+
+
+download.addEventListener('click', ()=>{
+const html = source.textContent || buildHTML(promptEl.value.trim());
+const blob = new Blob([html], {type:'text/html'});
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url; a.download = 'prompt-page.html'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+});
+</script>
+</body>
+</html>

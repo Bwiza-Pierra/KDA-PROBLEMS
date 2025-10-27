@@ -1,74 +1,77 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Prompt → HTML Export</title>
-<style>
-body{font-family:system-ui,Segoe UI,Arial;padding:28px;background:#f3f6f9;color:#0b1220}
-.wrap{max-width:900px;margin:0 auto}
-h1{margin:0 0 8px;font-size:22px}
-textarea{width:100%;min-height:180px;padding:10px;border-radius:8px;border:1px solid #d6dbe1}
-.controls{display:flex;gap:8px;margin-top:10px}
-button{padding:8px 12px;border-radius:8px;border:0;background:#0ea5a4;color:white;cursor:pointer}
-.preview{margin-top:18px;padding:12px;border-radius:8px;background:white;border:1px solid #e6e9ef}
-pre{white-space:pre-wrap}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vernacular Writing — UX Demo</title>
+  <style>
+    :root{
+      --bg:#f7f9fc;
+      --card:#ffffff;
+      --accent:#0b6df6;
+      --muted:#6b7280;
+      --input:#fffceb;
+      --good:#0f9d58;
+    }
+    body{
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#eef6ff 0%,var(--bg) 100%);
+      margin:0;padding:32px;color:#0f1724;
+    }
+    .container{max-width:1000px;margin:0 auto;}
+    header{display:flex;align-items:center;gap:16px;margin-bottom:24px;}
+    h1{margin:0;font-size:1.6rem;}
+    p.lead{margin:4px 0 0;color:var(--muted);}
+    .grid{display:grid;grid-template-columns:1fr 400px;gap:20px;}
+    .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(12,21,40,0.06);}
+    label{display:block;font-weight:600;margin-bottom:6px;font-size:0.9rem;}
+    .field{margin-bottom:12px;}
+    input[type="text"], select, textarea{
+      width:100%;padding:10px;border-radius:8px;border:1px solid #e6eefb;background:transparent;font-size:0.95rem;
+    }
+    input:focus, textarea:focus, select:focus{outline:2px solid rgba(11,109,246,0.12);border-color:var(--accent);}
+    .hint{font-size:0.82rem;color:var(--muted);margin-top:6px;}
+    .yellow{background:var(--input);padding:10px;border-radius:8px;}
+    button{background:var(--accent);color:white;padding:10px 14px;border:none;border-radius:8px;font-weight:600;cursor:pointer;}
+    button:disabled{opacity:0.5;cursor:not-allowed}
+    table{width:100%;border-collapse:collapse;margin-top:14px;}
+    th,td{padding:10px;border-bottom:1px solid #f2f6fb;text-align:left;font-size:0.95rem;}
+    th{background:#fbfdff;font-weight:700}
+    .small{font-size:0.86rem;color:var(--muted);}
+    .u-inline{display:inline-flex;gap:8px;align-items:center}
+    .pill{background:#eef7ff;color:var(--accent);padding:6px 8px;border-radius:999px;font-weight:600;font-size:0.8rem}
+    .success{color:var(--good);font-weight:700}
+    .tooltip{font-size:0.85rem;color:var(--muted);margin-top:8px}
+    /* Responsive */
+    @media (max-width:920px){ .grid{grid-template-columns:1fr; } }
+  </style>
 </head>
 <body>
-<div class="wrap">
-<h1>Prompt → HTML Export</h1>
-<p>Type a short prompt below and click <strong>Generate</strong> to produce a simple HTML page you can download.</p>
+  <div class="container">
+    <header>
+      <div class="u-inline">
+        <div class="pill">UX Demo</div>
+      </div>
+      <div style="flex:1">
+        <h1>User Interface & Ease of Use — Vernacular Writing Issues</h1>
+        <p class="lead">How spoken vernacular influences written text — demo of friendly data entry, guidance, and automated transfer.</p>
+      </div>
+    </header>
 
+    <div class="grid">
+      <!-- Left: main content + form -->
+      <main class="card" aria-labelledby="main-heading">
+        <h2 id="main-heading">Problem & Goals</h2>
+        <p class="small">
+          People often write words the way they speak (vernacular), which can cause inconsistent spelling, difficulties in formal contexts, or problems for automated systems.
+          This demo shows (1) a simple data-entry form with clear prompts, and (2) automatic transfer of entries to a database table with a basic "standardization" suggestion.
+        </p>
 
-<label for="prompt">Prompt</label>
-<textarea id="prompt">A warm welcome message about kindness, include one short Bible verse reference and a 2-line prayer.</textarea>
-
-
-<div class="controls">
-<button id="generate">Generate HTML</button>
-<button id="download">Download .html</button>
-</div>
-
-
-<div class="preview" id="preview">No generated HTML yet.</div>
-<pre id="source"></pre>
-</div>
-
-
-<script>
-const promptEl = document.getElementById('prompt');
-const preview = document.getElementById('preview');
-const source = document.getElementById('source');
-const generate = document.getElementById('generate');
-const download = document.getElementById('download');
-
-
-function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-
-function buildHTML(prompt){
-const title = (prompt.split('\n')[0]||'Prompt Page').slice(0,60);
-const body = escapeHtml(prompt).replace(/\n/g,'<br>');
-return `<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>${title}</title>\n<style>body{font-family:Arial,Helvetica,sans-serif;padding:28px;line-height:1.6;color:#111;background:#fff} h1{font-size:24px}</style>\n</head>\n<body>\n<h1>${title}</h1>\n<p>${body}</p>\n</body>\n</html>`;
-}
-
-
-generate.addEventListener('click', ()=>{
-const html = buildHTML(promptEl.value.trim());
-preview.innerHTML = 'Preview (opens in new window): <a href="#" id="open">Open</a>';
-document.getElementById('open').addEventListener('click', (e)=>{ e.preventDefault(); const w = window.open(); w.document.write(html); w.document.close(); });
-source.textContent = html;
-});
-
-
-download.addEventListener('click', ()=>{
-const html = source.textContent || buildHTML(promptEl.value.trim());
-const blob = new Blob([html], {type:'text/html'});
-const url = URL.createObjectURL(blob);
-const a = document.createElement('a');
-a.href = url; a.download = 'prompt-page.html'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-});
-</script>
-</body>
-</html>
+        <section style="margin-top:18px">
+          <h3>Simple data-entry form</h3>
+          <form id="entryForm" aria-label="Vernacular entry form">
+            <div class="field">
+              <label for="name">Name <span class="small" aria-hidden="true">— required</span></label>
+              <input id="name" name="name" type="text" placeholder="e.g., Maria" required
+                     onfocus="showHint('name','Enter your full name.')" onblur="clearHint('name')">
+              <d

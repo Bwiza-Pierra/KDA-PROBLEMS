@@ -1,0 +1,86 @@
+/*
+Personal Portfolio - Single-file React component (Tailwind CSS)
+
+How to use:
+1. Create a React app (Vite or Create React App). Example (Vite):
+   npm create vite@latest my-portfolio -- --template react
+   cd my-portfolio
+   npm install
+
+2. Install and configure Tailwind CSS (follow Tailwind docs). Minimal commands:
+   npm install -D tailwindcss postcss autoprefixer
+   npx tailwindcss init -p
+
+   Add to tailwind.config.js:
+   module.exports = {
+     content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
+     theme: { extend: {} },
+     plugins: [],
+   }
+
+   Put this in src/index.css (or App.css):
+   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
+
+3. Save this file as src/PersonalPortfolio.jsx and import it in src/App.jsx:
+   import PersonalPortfolio from "./PersonalPortfolio";
+   export default function App(){ return <PersonalPortfolio/> }
+
+4. Run the app: npm run dev (Vite) or npm start (CRA)
+
+Notes:
+- This is a fully client-side component that uses Tailwind classes. No external UI library is required.
+- Replace placeholder text, images and project links with your content.
+- If you want a static HTML version instead, ask and I will provide one.
+*/
+
+import React from "react";
+
+const projects = [
+  {
+    id: 1,
+    title: "Project One",
+    description:
+      "A short description of project one. Mention tech used and the problem solved.",
+    tags: ["React", "Tailwind", "API"],
+    link: "#",
+  },
+  {
+    id: 2,
+    title: "Project Two",
+    description: "Short description of project two with impact/metric.",
+    tags: ["Next.js", "TypeScript"],
+    link: "#",
+  },
+  {
+    id: 3,
+    title: "Project Three",
+    description: "Open-source library or a design system showcase.",
+    tags: ["Design", "Figma"],
+    link: "#",
+  },
+];
+
+export default function PersonalPortfolio() {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 text-gray-900">
+      <header className="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold shadow-lg">
+            P
+          </div>
+          <div>
+            <h1 className="text-lg font-semibold">Pierra — Product Designer & Developer</h1>
+            <p className="text-xs text-gray-500">Building clean interfaces & delightful experiences</p>
+          </div>
+        </div>
+        <nav className="hidden md:flex items-center space-x-6 text-sm">
+          <a href="#about" className="hover:underline">About</a>
+          <a href="#projects" className="hover:underline">Projects</a>
+          <a href="#skills" className="hover:underline">Skills</a>
+          <a href="#contact" className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:brightness-95">Contact</a>
+        </nav>
+        <div className="md:hidden">
+          {/* Mobile menu simple icon (no JS) - replace with a proper menu as needed */}
+          <button aria-label="menu" className="p-2 rounded-md

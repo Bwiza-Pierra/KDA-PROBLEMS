@@ -3,75 +3,49 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Vernacular Writing — UX Demo</title>
+  <title>KDA & Vernacular Writing — UX Demo</title>
+
+  <!-- Google Fonts + Font Awesome for icons + Chart.js for chart -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     :root{
-      --bg:#f7f9fc;
+      --bg1:#0f1724;
+      --bg2:#071033;
       --card:#ffffff;
-      --accent:#0b6df6;
-      --muted:#6b7280;
-      --input:#fffceb;
-      --good:#0f9d58;
+      --muted:#94a3b8;
+      --accent:#7c5cff;
+      --accent-2:#00d4ff;
+      --glass: rgba(255,255,255,0.06);
+      --success:#16a34a;
+      --danger:#ef4444;
+      --radius:14px;
+      --maxw:1100px;
+      --shadow: 0 8px 30px rgba(2,6,23,0.45);
     }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#eef6ff 0%,var(--bg) 100%);
-      margin:0;padding:32px;color:#0f1724;
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:#e6eefb;
+      background: linear-gradient(160deg,var(--bg1) 0%, var(--bg2) 60%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+      display:flex;
+      justify-content:center;
     }
-    .container{max-width:1000px;margin:0 auto;}
-    header{display:flex;align-items:center;gap:16px;margin-bottom:24px;}
-    h1{margin:0;font-size:1.6rem;}
-    p.lead{margin:4px 0 0;color:var(--muted);}
-    .grid{display:grid;grid-template-columns:1fr 400px;gap:20px;}
-    .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(12,21,40,0.06);}
-    label{display:block;font-weight:600;margin-bottom:6px;font-size:0.9rem;}
-    .field{margin-bottom:12px;}
-    input[type="text"], select, textarea{
-      width:100%;padding:10px;border-radius:8px;border:1px solid #e6eefb;background:transparent;font-size:0.95rem;
+
+    .wrap{width:100%;max-width:var(--maxw);}
+
+    header{
+      display:flex;align-items:center;gap:16px;margin-bottom:18px;
     }
-    input:focus, textarea:focus, select:focus{outline:2px solid rgba(11,109,246,0.12);border-color:var(--accent);}
-    .hint{font-size:0.82rem;color:var(--muted);margin-top:6px;}
-    .yellow{background:var(--input);padding:10px;border-radius:8px;}
-    button{background:var(--accent);color:white;padding:10px 14px;border:none;border-radius:8px;font-weight:600;cursor:pointer;}
-    button:disabled{opacity:0.5;cursor:not-allowed}
-    table{width:100%;border-collapse:collapse;margin-top:14px;}
-    th,td{padding:10px;border-bottom:1px solid #f2f6fb;text-align:left;font-size:0.95rem;}
-    th{background:#fbfdff;font-weight:700}
-    .small{font-size:0.86rem;color:var(--muted);}
-    .u-inline{display:inline-flex;gap:8px;align-items:center}
-    .pill{background:#eef7ff;color:var(--accent);padding:6px 8px;border-radius:999px;font-weight:600;font-size:0.8rem}
-    .success{color:var(--good);font-weight:700}
-    .tooltip{font-size:0.85rem;color:var(--muted);margin-top:8px}
-    /* Responsive */
-    @media (max-width:920px){ .grid{grid-template-columns:1fr; } }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <div class="u-inline">
-        <div class="pill">UX Demo</div>
-      </div>
-      <div style="flex:1">
-        <h1>User Interface & Ease of Use — Vernacular Writing Issues</h1>
-        <p class="lead">How spoken vernacular influences written text — demo of friendly data entry, guidance, and automated transfer.</p>
-      </div>
-    </header>
+    .brand{
+      width:64px;height:64px;border-radius:12px;
+      background:linear-gradient(135deg,var(--acce
 
-    <div class="grid">
-      <!-- Left: main content + form -->
-      <main class="card" aria-labelledby="main-heading">
-        <h2 id="main-heading">Problem & Goals</h2>
-        <p class="small">
-          People often write words the way they speak (vernacular), which can cause inconsistent spelling, difficulties in formal contexts, or problems for automated systems.
-          This demo shows (1) a simple data-entry form with clear prompts, and (2) automatic transfer of entries to a database table with a basic "standardization" suggestion.
-        </p>
-
-        <section style="margin-top:18px">
-          <h3>Simple data-entry form</h3>
-          <form id="entryForm" aria-label="Vernacular entry form">
-            <div class="field">
-              <label for="name">Name <span class="small" aria-hidden="true">— required</span></label>
-              <input id="name" name="name" type="text" placeholder="e.g., Maria" required
-                     onfocus="showHint('name','Enter your full name.')" onblur="clearHint('name')">
-              <d
